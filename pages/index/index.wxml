@@ -1,0 +1,36 @@
+<view class="indexBox">
+<!-- 搜索框 -->
+  <view class="search">
+    <view class="searchBox">
+      <icon class="iconfont icon-sousuo"></icon>
+      <input placeholder='搜索群名称/群主名称/群ID'></input>
+    </view>
+  </view>
+<view class="title">群列表
+  <icon class="iconfont icon-tianjiaduoyonghu"
+  bindtap='layerShow'></icon>
+</view>
+<scroll-view scroll-y class="list">
+  <block wx:for="[1,2,3,4]" wx:key="index">
+      <view class="group">
+        <view class="groupImg">
+          <image src='../../static/indexB.png'></image>
+        </view>
+        <view class="groupName">
+          <view>群名称</view>
+          <view>群主：发抖的小猫咪 <text>9:00</text> </view>
+        </view>
+      </view>
+  </block>
+</scroll-view>
+</view>
+<view class="footer">
+  <view class="fooL"></view>
+  <view class='logoName'>吃什么</view>
+  <view class="fooR"></view>
+</view>
+<modal 
+inputList="{{inputList}}" 
+title="提示sdfs"
+modalShow="{{modalShow}}" 
+catch:myeventBox="myeventBox"></modal>
