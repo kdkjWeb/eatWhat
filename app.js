@@ -10,20 +10,20 @@ App({
     wx.login({
       success: r => {
         var code = r.code;
-        wx.getUserInfo({
-          success: res => {
-            console.log(res);
-            this.login(code,res.encryptedData,res.iv);
-            this.globalData.wxLogin = {
-              encryptedData: res.encryptedData,
-              iv:res.iv
-            }
-          },
-          fail: res => {
+        // wx.getUserInfo({
+        //   success: res => {
+        //     console.log(res);
+        //     this.login(code,res.encryptedData,res.iv);
+        //     this.globalData.wxLogin = {
+        //       encryptedData: res.encryptedData,
+        //       iv:res.iv
+        //     }
+        //   },
+        //   fail: res => {
 
-            // this.login();
-          }
-        });
+        //     // this.login();
+        //   }
+        // });
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
