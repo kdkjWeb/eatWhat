@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+    "pages/withhold/withhold",
     "pages/search/search",
     "pages/index/index"
   ],

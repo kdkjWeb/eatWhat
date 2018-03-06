@@ -32,6 +32,6 @@
 </view>
 <layer 
 inputList="{{inputList}}" 
-title="提示sdfs"
+title="建群"
 modalShow="{{modalShow}}" 
 catch:myeventBox="myeventBox"></layer>

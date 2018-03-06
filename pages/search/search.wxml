@@ -8,10 +8,6 @@
       bindfocus='search'></input>
     </view>
   </view>
-<view class="title">群列表
-  <icon class="iconfont icon-tianjiaduoyonghu"
-  bindtap='layerShow'></icon>
-</view>
 <scroll-view scroll-y class="list">
   <block wx:for="[1,2,3,4]" wx:key="index">
       <view class="group">
@@ -20,7 +16,7 @@
         </view>
         <view class="groupName">
           <view>群名称</view>
-          <view>群主：发抖的小猫咪 <text>9:00</text> </view>
+          <view>群主：发抖的小猫咪 <text bindtap='addGroup' data-id="{{index}}">+</text> </view>
         </view>
       </view>
   </block>
@@ -33,6 +29,6 @@
 </view>
  <layer 
 inputList="{{inputList}}" 
-title="提示sdfs"
+title="加入群"
 modalShow="{{modalShow}}" 
 catch:myeventBox="myeventBox"></layer> 

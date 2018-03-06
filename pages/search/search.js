@@ -6,15 +6,13 @@ Page({
   data: {
     modalShow: false,
     inputList: [{
-      textContent: "",     //text 值
-      label: "",              //label 的名字 最多4个字
-      placeholder: "新建群名称",  //placeholder的值
-      inputType: "input", //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
-      selectList: [],  //选择框 内部循环列表  当type为select时必须要传当前值
+      textContent: "群名称",     //text 值
+      inputType: "text" //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
     }]
   },
   //弹框的出现
-  layerShow() {
+  addGroup(e) {
+    var id = e.target.dataset.id;
     this.setData({
       modalShow: true
     })

@@ -50,7 +50,6 @@
 /* 列表 */
 .list {
   height:calc(100% - 162px);
-  border-bottom:1px solid #bfbfbf;
   overflow: hidden;
 }
 .group {
