@@ -1,5 +1,7 @@
 {
   "pages": [
+    
+    "pages/search/search",
     "pages/index/index"
   ],
   "window": {

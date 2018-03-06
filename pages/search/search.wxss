@@ -1,3 +1,4 @@
+/* pages/search/search.wxss */
 .indexBox {
   height:100%;
   width:100%;
@@ -8,7 +9,7 @@
   height:50px;
   box-sizing: border-box;
   padding-top:10px;
-  background-color: #e9680a;
+  border-bottom:1px solid #bfbfbf;
 }
 .searchBox {
   width:90%;
@@ -17,7 +18,7 @@
   border-radius: 30px;
   background: white;
   border:1px solid #e9680a;
-  position:relative;
+  position:relative; 
 }
 .searchBox icon {
   position:absolute;

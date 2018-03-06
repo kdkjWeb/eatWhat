@@ -1,3 +1,4 @@
+<!--pages/search/search.wxml-->
 <view class="indexBox">
 <!-- 搜索框 -->
   <view class="search">
@@ -30,8 +31,8 @@
   <view class='logoName'>吃什么</view>
   <view class="fooR"></view>
 </view>
-<layer 
+ <layer 
 inputList="{{inputList}}" 
 title="提示sdfs"
 modalShow="{{modalShow}}" 
-catch:myeventBox="myeventBox"></layer>
+catch:myeventBox="myeventBox"></layer> 

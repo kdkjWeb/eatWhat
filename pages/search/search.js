@@ -1,10 +1,10 @@
-//index.js
+// pages/search/search.js
 //获取应用实例
 const app = getApp();
 
 Page({
   data: {
-    modalShow:false,
+    modalShow: false,
     inputList: [{
       textContent: "",     //text 值
       label: "",              //label 的名字 最多4个字
@@ -14,28 +14,28 @@ Page({
     }]
   },
   //弹框的出现
-  layerShow(){
+  layerShow() {
     this.setData({
-      modalShow:true
+      modalShow: true
     })
   },
   //子组件返回值的操作
-  myeventBox(e){
+  myeventBox(e) {
     console.log(e.detail);
   },
   //点击跳转搜索框
-  search(){
+  search() {
     wx.navigateTo({
       url: '../search/search',
     })
   },
-  onLoad:function(){
-    
+  onLoad: function () {
+
   },
   /**
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-    
+
   }
 })
