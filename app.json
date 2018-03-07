@@ -1,8 +1,13 @@
 {
   "pages": [
-    "pages/withhold/withhold",
+        "pages/lunch/lunch",
+    "pages/newVeg/newVeg",
+    "pages/localBook/localBook",
+    "pages/localMerchants/localMerchants",
+    "pages/index/index",
     "pages/search/search",
-    "pages/index/index"
+    "pages/withhold/withhold",
+    "pages/businessDetails/businessDetails"
   ],
   "window": {
     "navigationBarTitleText": "吃什么",

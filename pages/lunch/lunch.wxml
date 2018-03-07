@@ -1,0 +1,68 @@
+<!--pages/lunch/lunch.wxml-->
+<view class="lunchBox">
+  <view class="lunchInput">
+    <view class="labelInput">
+      <view class="label">拼餐组名：</view>
+      <view class="laInput">
+        <input placeholder='输入拼餐组名' bindinput='inputVal'></input>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">商户名:</view>
+      <view class="laInput laInputIcon">
+        <input disabled='disabled' placeholder='请输入商户名' bindtap='selectShow' value="{{selectVal}}"></input>
+        <scroll-view scroll-y class="select" wx:if="{{select}}">
+          <view class="selectList" wx:for="{{selectList}}" wx:key="{{index}}" bindtap='selectListValue' data-index="{{index}}">
+            {{item.name}}
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">人数：</view>
+      <view class="laInput">
+        <input placeholder='请输入人数' bindinput='inputVal'></input>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">预估消费总额：</view>
+      <view class="laInput">
+        <input placeholder='请输入消费总额' bindinput='inputVal'></input>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">预估人均消费：</view>
+      <view class="laInput">
+        <input placeholder='请输入人均消费' bindinput='inputVal'></input>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">投票截止时间：</view>
+      <view class="laInput">
+        <picker mode="date" value="{{date}}" start="2018-03-07" bindchange="bindDateChange">
+            <input style='margin-bottom:10px;' placeholder='请输入截止时间年月日' value='{{date}}'></input>
+        </picker>
+        <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
+           <input placeholder='请输入截止时间时分' bindinput='inputVal' value='{{time}}' ></input>
+        </picker>
+      </view>
+    </view>
+    <view class="labelInput">
+      <view class="label">出发时间：</view>
+      <view class="laInput">
+        <picker mode="date" value="{{date}}" start="2018-03-07" bindchange="bindDateChange">
+              <input style='margin-bottom:10px;' placeholder='请输入出发时间年月日' value='{{date}}'></input>
+          </picker>
+          <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
+            <input placeholder='请输入出发时间时分' bindinput='inputVal' value='{{time}}' ></input>
+          </picker>
+      </view>
+    </view>
+    <view class='btn'>发起投票</view>
+  </view>
+</view>
+<view class="footer">
+  <view class="fooL"></view>
+  <view class='logoName'>吃什么</view>
+  <view class="fooR"></view>
+</view>

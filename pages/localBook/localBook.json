@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "本群账簿",
+  "usingComponents": {
+    "layer": "../../components/layer/layer"
+  }
+}
