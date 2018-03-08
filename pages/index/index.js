@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp();
-
+const $v = app.globalData;
 Page({
   data: {
     modalShow:false,
@@ -29,6 +29,27 @@ Page({
       url: '../search/search',
     })
   },
+  //获取群列表
+  groupList(){
+    wx.request({
+      url: $v.appPath +'/pc_crowd/s_my_crowd',
+      method:"GET",
+      data:{
+        uid: $v.uid
+      },
+      success:(res)=>{
+        if(res.data.code == 0) {
+            console.log(res.data.code);
+        }else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
   //点击群，跳转群内操作
   toGroup(){
     wx.navigateTo({
@@ -36,6 +57,13 @@ Page({
     })
   },
   onLoad:function(){
+    var timer = setInterval(()=>{
+      if ($v.uid) {
+        clearInterval(timer);
+        this.groupList();
+      }
+      
+    },10);
     
   },
   /**
