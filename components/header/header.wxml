@@ -1,0 +1,12 @@
+ <view class='nav'>
+  <view class="header">
+  <view bindtap='breakfast' class="{{index == 0 ?'active':''}} breakfast">期望午餐</view>
+  <view bindtap='business' class="{{index == 1 ?'active':''}}">新建商家</view>
+  <view bindtap='other' class="tobottom {{index == 2 ?'active tobottomA':''}}">其他 
+    
+     <view hidden="{{isShow}}">
+      <view wx:for="{{otherList}}" wx:key="{{index}}" data-index='{{index}}' bindtap='otherS'>{{item}}</view>
+    </view>
+  </view>
+</view>
+</view> 

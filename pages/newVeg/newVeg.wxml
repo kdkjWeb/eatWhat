@@ -1,5 +1,6 @@
 <!--pages/newVeg/newVeg.wxml-->
 <view class="newBox">
+  <header></header>
   <view class="newInput">
     <view class="inL">
       <view class="title">菜品图片:</view>

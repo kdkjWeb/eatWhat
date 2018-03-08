@@ -1,7 +1,7 @@
 /* pages/businessDetails/businessDetails.wxss */
 .businessBox {
   padding:0 15px;
-  height:100%;
+  height:calc(100% - 53px);
   background-color: #ffffff;
 }
 .businessBox .img {

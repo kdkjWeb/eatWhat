@@ -10,6 +10,7 @@
   margin:0 auto;
   box-sizing: border-box;
   padding-top:50px;
+  padding-bottom:50px;
   overflow-y: scroll;
 }
 .inputGroup .input {

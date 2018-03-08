@@ -1,8 +1,9 @@
 <!--pages/localMerchants/localMerchants.wxml-->
 <view class="indexBox">
+<header></header>
 <scroll-view scroll-y class="list">
   <block wx:for="[1,2,3,4]" wx:key="index">
-      <view class="group">
+      <view class="group" bindtap='todetail'>
         <view class="groupImg">
           <image src='../../static/indexB.png'></image>
         </view>

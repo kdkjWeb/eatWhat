@@ -1,13 +1,19 @@
 {
   "pages": [
-        "pages/lunch/lunch",
-    "pages/newVeg/newVeg",
-    "pages/localBook/localBook",
-    "pages/localMerchants/localMerchants",
+    "pages/member/member",
+    "pages/group/group",
     "pages/index/index",
     "pages/search/search",
+    
+    "pages/lunch/lunch",
+    "pages/newVeg/newVeg",
+    "pages/localMerchants/localMerchants",
+    "pages/localBook/localBook",
+    
     "pages/withhold/withhold",
     "pages/businessDetails/businessDetails"
+    
+   
   ],
   "window": {
     "navigationBarTitleText": "吃什么",

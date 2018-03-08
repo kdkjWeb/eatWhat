@@ -1,5 +1,6 @@
 <!--pages/localBook/localBook.wxml-->
 <view class="bookBox">
+<header></header>
   <view class="groupName">群名：好吃的小伙伴</view>
   <view class="groupDetail">
     <view class="balance">群余额：1000</view>

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "本群商家",
+  "navigationBarTitleText": "群名",
   "usingComponents": {
     "header": "../../components/header/header",
     "layer": "../../components/layer/layer"

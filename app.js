@@ -119,7 +119,6 @@ App({
     appPath: "http://192.168.20.136:8083/",
     // appPath: "http://192.168.20.101:8083/",
     token:'',
-    foodArr:{},
-    total:0
+    headerIndex:"10", //群名header组件的index
   }
 })

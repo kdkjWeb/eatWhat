@@ -1,5 +1,6 @@
 <!--pages/lunch/lunch.wxml-->
 <view class="lunchBox">
+  <header></header>
   <view class="lunchInput">
     <view class="labelInput">
       <view class="label">拼餐组名：</view>

@@ -29,6 +29,12 @@ Page({
       url: '../search/search',
     })
   },
+  //点击群，跳转群内操作
+  toGroup(){
+    wx.navigateTo({
+      url: '../group/group',
+    })
+  },
   onLoad:function(){
     
   },

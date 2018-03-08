@@ -12,6 +12,11 @@ Page({
       selectList: [],  //选择框 内部循环列表  当type为select时必须要传当前值
     }]
   },
+  todetail:function(){
+    wx.navigateTo({
+      url: '../businessDetails/businessDetails',
+    })
+  },
   onLoad: function () {
 
   },

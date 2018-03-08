@@ -1,6 +1,7 @@
 <!--pages/businessDetails/businessDetails.wxml-->
+   <header></header> 
 <view class="businessBox">
-  <view class="img"><image mode="widthFix" src='../../../static/indexB.png'></image></view>
+  <view class="img"><image mode="widthFix" src='../../static/indexB.png'></image></view>
   <view class="text">
     <view>黄手艺火锅冒菜店</view>
     <view>电话：18844551122</view>
