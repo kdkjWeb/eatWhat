@@ -1,10 +1,15 @@
 // pages/localBook/localBook.js
+const app = getApp();
+const $v = app.globalData;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    index:"",
+    crowdName:"",
+    crowdMoney:"",
     modalShow: false,
     selectShow:false,
     inputList:[],
@@ -85,31 +90,26 @@ Page({
     this.setData({
       selectShow: !this.data.selectShow
     });
-    var json = [{
-      label: "人员",              //label 的名字 最多4个字
-      placeholder: "",  //placeholder的值
-      inputType: "select", //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
-      selectList: [{
-        name:"王小二",
-        id:1
+    var json;
+    this.getGroupUser((data)=>{
+      data.forEach((e,index)=>{
+        data[index].name = e.nickname;
+      });
+      json = [{
+        label: "人员",              //label 的名字 最多4个字
+        placeholder: "",  //placeholder的值
+        inputType: "select", //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
+        selectList: data,  //选择框 内部循环列表  当type为select时必须要传当前值
       }, {
-        name: "王小二1",
-        id: 1
-        }, {
-          name: "王小二2",
-          id: 1
-      }, {
-        name: "王小二3",
-        id: 1
-      }],  //选择框 内部循环列表  当type为select时必须要传当前值
-      },{
         label: "金额",              //label 的名字 最多4个字
         placeholder: "单位：元",  //placeholder的值
         inputType: "labelInput", //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
       }];
-    this.setData({
-      modalShow: true,
-      inputList: json
+      this.setData({
+        modalShow: true,
+        title: '充值',
+        inputList: json
+      })
     })
   },
   //提现
@@ -123,19 +123,160 @@ Page({
       inputType: "labelInput", //"labelInput"带有label的input  "select"选择框  "text"提示信息  "input"不带有label的input 默认text
     }];
     this.setData({
+      title: "提现",
       modalShow: true,
       inputList: json
     })
   },
   //组件返回值
   myeventBox(e) {
-    console.log(e.detail);
+    this.toChargeSubmit(e.detail)
+  },
+  /**
+   * 充值和提现提交
+  */ 
+  toChargeSubmit (data){
+    var json;
+    if(data.length == 2) {
+      var reg = /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/;
+      if(data[0].value == undefined) {
+        wx.showToast({
+          title: '请选择人员',
+          mask: true,
+          duration: 1500,
+          image:"../../img/tips.png"
+        });
+        return false;
+      }
+      if (!reg.test(data[1].value)) {
+        wx.showToast({
+          title: '请输入正确价格',
+          mask: true,
+          duration: 1500,
+          image: "../../img/tips.png"
+        });
+        return false;
+      }
+      json = {
+        crowdId: $v.groupId,
+        pay: data[1].value,
+        memberId: data[0].valueId
+      }
+    }else {
+      var reg = /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/;
+      if (!reg.test(data[0].value)) {
+        wx.showToast({
+          title: '请输入正确的价格，保留两位小数',
+          mask: true,
+          duration: 1500
+        });
+        return false;
+      }
+      json = {
+        crowdId: $v.groupId,
+        pay: "-"+data[0].value,
+        memberId: $v.uid
+      }
+    }
+    
+    wx.request({
+      url: $v.appPath + 'pc_pay_record/save',
+      method: "POST",
+      header: {
+        cookie: 'JSESSIONID=' + $v.token
+      },
+      data:json,
+      success: (res) => {
+        if (res.data.code == 0) {
+          var data = this.data.payMentList;
+          var dt = res.data.data;
+          dt.cDate = app.times(dt.cDate, "date");
+          data.splice(0,0,dt);
+          this.setData({
+            payMentList:data
+          });
+          wx.showToast({
+            title: '成功',
+            mask: true,
+            duration: 1500
+          });
+          setTimeout(() => {
+            this.setData({
+              modalShow: !this.data.modalShow
+            })
+          }, 1000)
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
+  /**
+   * 查询群账户列表
+   */
+  accountList(){
+    wx.request({
+      url: $v.appPath + 'pc_pay_record/s_bean',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + app.globalData.token
+      },
+      data: {
+        crowdId: $v.groupId
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          var d = res.data.data.list;
+          d.forEach((e, index) => {
+            d[index].cDate = app.times(e.cDate, "date");
+          });
+          this.setData({
+            payMentList: d
+          })
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
+  /**
+   * 查询群成员
+   */
+  getGroupUser(callBack){
+    wx.request({
+      url: $v.appPath + 'pc_member/s_all_user',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + $v.token
+      },
+      data: {
+        crowdId: $v.groupId
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          callBack(res.data.data)
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
   },
 
   /**
@@ -149,7 +290,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      crowdName: $v.crowdName,
+      crowdMoney: $v.crowdMoney,
+      index: "2"
+    })
+    this.accountList()
   },
 
   /**

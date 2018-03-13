@@ -81,6 +81,8 @@
 }
 .groupName view:nth-of-type(2) text {
   float:right;
+  font-size:12px;
+  margin-top:2px;
 }
 
 /* 底部 */

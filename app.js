@@ -5,46 +5,36 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    // 登录
-
-    wx.getUserInfo({
-      success: res => {
-        this.login(res.encryptedData, res.iv);
-        this.globalData.wxLogin = {
-          encryptedData: res.encryptedData,
-          iv: res.iv
-        }
-      },
-      fail: res => {
-        this.fetch();
-      }
-    });
+    
+    
     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-
     // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          console.log(res);
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-              console.log(this.globalData.userInfo);
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      },
-      fail: res => {
-      }
-    })
+    // wx.getSetting({
+    //   success: res => {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+    //       wx.getUserInfo({
+    //         success: res => {
+    //           // 可以将 res 发送给后台解码出 unionId
+    //           this.globalData.userInfo = res.userInfo
+    //           console.log(res.userInfo);
+    //           console.log(this.globalData.userInfo);
+    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+    //           // 所以此处加入 callback 以防止这种情况
+    //           if (this.userInfoReadyCallback) {
+    //             this.userInfoReadyCallback(res)
+    //           }
+    //         }
+    //       })
+    //     }
+    //   },
+    //   fail: res => {
+    //   }
+    // })
+  },
+  onShow:function(){
+    // 登录
+    this.login();
   },
   // 拉取授权信息
   fetch:function(){
@@ -56,18 +46,7 @@ App({
       success: function (res) {
         wx.openSetting({
           success: (res) => {
-            wx.getUserInfo({
-              success: res => {
-                that.login(res.encryptedData, res.iv);
-                that.globalData.wxLogin = {
-                  encryptedData: res.encryptedData,
-                  iv: res.iv
-                }
-              },
-              fail: res => {
-                that.fetch();
-              }
-            });
+              that.register();
             // 发送 res.code 到后台换取 openId, sessionKey, unionId
           }, fail: (res) => {}
         })
@@ -75,17 +54,16 @@ App({
     })
   },
   //调用后台 获取token；
-  login: function (encryptedData, iv) {
+  login: function () {
+    console.log(11111111);
     var that = this;
     wx.login({
       success: r => {
         var code = r.code;
         wx.request({
-          url: this.globalData.appPath + 'login',
+          url: that.globalData.appPath + 'login',
           method: "GET",
           data: {
-            encryptedData: encryptedData,
-            iv: iv,
             code: code,
             // password:'123'
           },
@@ -101,8 +79,8 @@ App({
           
             }
             if (res.data.msg == "10000") {
-              that.register(encryptedData, iv);
-
+              that.register(); 
+              return;
             }
           },
           fail: function (res) {
@@ -112,31 +90,37 @@ App({
       }
     })
   },
-  register: function (encryptedData, iv) {
+  register: function () {
     var that = this;
     wx.login({
       success: r => {
         var code = r.code;
-        wx.request({
-          url: this.globalData.appPath + 'register',
-          data: {
-            encryptedData: encryptedData,
-            iv: iv,
-            code: code
-          },
+        wx.getUserInfo({
           success: function (res) {
-            if (res.data.code != 0) {
-              // 错误提示
-              wx.hideLoading();
-              wx.showModal({
-                title: '提示:',
-                content: res.data.msg,
-                showCancel: false
-              })
-              return;
-            }
-            wx.hideLoading();
-            that.login(encryptedData, iv);
+            wx.request({
+              url: that.globalData.appPath + 'register',
+              data: {
+                encryptedData: res.encryptedData,
+                iv: res.iv,
+                code: code
+              },
+              success: function (res) {
+                if (res.data.code != 0) {
+                  // 错误提示
+                  wx.hideLoading();
+                  wx.showModal({
+                    title: '提示:',
+                    content: res.data.msg,
+                    showCancel: false
+                  })
+                  return;
+                }
+                wx.hideLoading();
+                that.login();
+              }
+            })
+          },fail:function(){
+            that.fetch()
           }
         })
       }
@@ -156,19 +140,43 @@ App({
         success: function (res) {
           if (res.data.code == 0) {
             that.globalData.uid = res.data.userInfo.id;
+            that.globalData.userInfo = res.data.userInfo;
           }
         }
       })
   },
+  // 通过时间戳获取时间
+  times:function(val,date){
+    var time = new Date(val);
+    var year = time.getFullYear();
+    var month = time.getMonth() >= 10 ? (time.getMonth() + 1) : '0' + (time.getMonth() + 1);
+    var day = time.getDate() >= 10 ? time.getDate() : '0' + time.getDate();
+    var hour = time.getHours() >= 10 ? time.getHours() : '0' + time.getHours();
+    var min = time.getMinutes() >= 10 ? time.getMinutes() : '0' + time.getMinutes();
+    var sec = time.getSeconds() >= 10 ? time.getSeconds() : '0' + time.getSeconds();
+    if(date == "date") {
+      return (year + "-" + month + "-" + day);
+    }else if(date == "time") {
+      return (hour + ":" + min);
+    }else if (date == "fulldate") {
+      return (year + "-" + month + "-" + day + " " + hour + ":" + min);
+    }
+    
+  },
   onLoad: function () {
-
+    
   },
   globalData: {
     userInfo: null,
     uid:null,
+    groupId:"112",  //测试群号，后期设置为null
+    crowdName:"",
+    crowdMoney:"",
     // appPath: "http://192.168.20.136:8082/",
-    appPath: "http://192.168.20.111:8082/",
+    appPath: "http://192.168.20.108:8082/",
+    socketPath:"ws://192.168.20.108:8082/",
+    // appPath: "http://192.168.20.8:8080/",
     token: '',
-    headerIndex: "10", //群名header组件的index
+    pageSize:0
   }
 })

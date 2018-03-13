@@ -1,9 +1,9 @@
 <!--pages/newVeg/newVeg.wxml-->
 <view class="newBox">
-  <header></header>
+  <header indexY="{{index}}"></header>
   <view class="newInput">
     <view class="inL">
-      <view class="title">菜品图片:</view>
+      <view class="title">商家图片:</view>
       <view class='flexI'>
         <view class="img" wx:for="{{imgs}}" wx:for-item="item" wx:key="*this">
 
@@ -15,17 +15,25 @@
       </view>
     </view>
     <view class="inL">
-      <view class="title">菜品名称:</view>
+      <view class="title">商家店名:</view>
       <view class='flexI'>
-        <input class='input' placeholder='请输入菜品名字' bindinput="title"></input>
+        <input class='input' placeholder='请输入商家店名' bindinput="title"></input>
       </view>
 
     </view>
 
     <view class="inL">
-      <view class="title">菜品价格:</view>
+      <view class="title">商家地址:</view>
       <view class='flexI'>
-        <input class='input' placeholder="输入菜品价格/单位：元" bindinput='introduce' type="number"></input>
+        <input class='input' placeholder='请输入商家地址' bindinput="address"></input>
+      </view>
+
+    </view>
+
+    <view class="inL">
+      <view class="title">商家电话:</view>
+      <view class='flexI'>
+        <input class='input' placeholder="请输入商家电话" bindinput='phone' type="number"></input>
       </view>
     </view>
     <view class="btn" bindtap="toUpload">确定</view>

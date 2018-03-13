@@ -1,25 +1,27 @@
 // pages/lunch/lunch.js
+var app = getApp();
+var $v = app.globalData;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    index:"",
+    startDate:"",
+    startTime:"",
+    name:"",
+    count:"",
+    pay:"",
+    payCount:"",
+    voteDate:"",
+    voteTime:"",
+    departDate:"",
+    departTime:"",
     select: false,
     selectVal:'',
-    selectList:[{
-      name:"王小二",
-      id:"1"
-    }, {
-      name: "王小二",
-      id: "1"
-      }, {
-        name: "王小二",
-        id: "1"
-    }, {
-      name: "王小二",
-      id: "1"
-    },]
+    selectId:"",
+    selectList:[]
   },
   selectShow: function () {
     this.setData({
@@ -27,29 +29,159 @@ Page({
     })
   },
   selectListValue: function (e) {
-    var index = e.target.dataset.index;
+    var shopName = e.target.dataset.shopname;
+    var storesId = e.target.dataset.storesid;
     this.setData({
-      selectVal: this.data.selectList[index].name,
+      selectVal: shopName,
+      selectId: storesId,
       select: !this.data.select
     })
   },
   bindDateChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      date: e.detail.value
+      voteDate: e.detail.value
     })
   },
   bindTimeChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      time: e.detail.value
+      voteTime: e.detail.value
+    })
+  },
+  bindDChange: function (e) {
+    this.setData({
+      departDate: e.detail.value
+    })
+  },
+  bindDTChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      departTime: e.detail.value
+    })
+  },
+  //发起投票
+  vote:function(){
+    var d = this.data;
+    if (d.name == "" || d.selectId == "" || d.count == "" || d.pay == "" || d.payCount == "" || d.voteDate == "" || d.voteTime == "" || d.departDate == "" || d.coudepartTiment == "") {
+      wx.showToast({
+        title: '请输入完整内容',
+        mask: true,
+        duration: 1500,
+        image: "../../img/tips.png"
+      })
+      return false;
+    }
+    if(d.count <=1) {
+      wx.showToast({
+        title: '人数需要大于1',
+        mask: true,
+        duration: 1500,
+        image: "../../img/tips.png"
+      })
+      return false;
+    }
+    var m = (this.data.voteDate).replace(/-/g, "/");
+    var n = (this.data.departDate).replace(/-/g, "/");
+    wx.request({
+      url: $v.appPath + 'pc_meal/save',
+      method: "POST",
+      header: {
+        cookie: 'JSESSIONID=' + $v.token
+      },
+      data: {
+        crowdId:$v.groupId,
+        name: this.data.name,
+        storesId:this.data.selectId,
+        num:this.data.count,
+        amount:this.data.pay,
+        perMoney:this.data.payCount,
+        votetime: new Date(m +" "+this.data.voteTime).getTime(),
+        goOff: new Date(n + " " + this.data.departTime).getTime(),
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          wx.showToast({
+            title: '添加成功',
+            mask: true,
+            duration: 1500
+          });
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
+  // 获取当前输入框的值
+  inputVal1(e){
+    var val = e.detail.value;
+    this.setData({
+      name:val
+    })
+  },
+  inputVal2(e) {
+    var val = e.detail.value;
+    this.setData({
+      count: val
+    })
+  },
+  inputVal3(e) {
+    var val = e.detail.value;
+    this.setData({
+      pay: val
+    })
+  },
+  inputVal4(e) {
+    var val = e.detail.value;
+    this.setData({
+      payCount: val
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.setData({
+      startDate: app.times(new Date().getTime(), "date"),
+      startTime: app.times(new Date().getTime(), "time")
+    })
+    console.log(this.data.startDate, this.data.startTime);
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onHide:function(){
+  },
+  /**
+   * 获取商户列表
+   */
+  mearchList(){
+    wx.request({
+      url: $v.appPath + 'pc_stores/s_bean',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + app.globalData.token
+      },
+      data: {
+        crowdId: $v.groupId
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          this.setData({
+            selectList: res.data.data.list
+          })
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
   },
 
   /**
@@ -63,7 +195,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      index: "0",
+    })
+    this.mearchList();
   },
 
   /**

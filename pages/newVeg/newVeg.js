@@ -1,11 +1,13 @@
 // pages/newVeg/newVeg.js
 const app = getApp();
+const $v = app.globalData;
 Page({
 
   data: {
+    index:"",
     title: '',
-    introduce: '',
-    imgs: ""
+    address: '',
+    phone: ""
   },
   title(e) {
     var value = e.detail.value;
@@ -13,10 +15,16 @@ Page({
       title: value
     });
   },
-  introduce(e) {
+  address(e) {
     var value = e.detail.value;
     this.setData({
-      introduce: value
+      address: value
+    });
+  },
+  phone(e) {
+    var value = e.detail.value;
+    this.setData({
+      phone: value
     });
   },
 
@@ -95,34 +103,61 @@ Page({
   },
   toUpload: function (e) {
     var that = this;
-    if (this.data.title == "" || this.data.introduce == "") {
-      wx.showModal({
-        content: '请输入完整内容',
+    if (this.data.title == "" || this.data.address == "" || this.data.phone == "") {
+      wx.showToast({
+        title: '请输入完整内容',
+        mask:true,
+        duration: 1500,
+        image: "../../img/tips.png"
       })
       return false;
     }
     wx.uploadFile({
-      url: app.globalData.appPath + 'food/save',
+      url: $v.appPath + '/pc_stores/save',
       method: "POST",
       filePath: that.data.imgs[0],
       name: 'file',
       header: {
         'content-type': 'multipart/form-data',
-        "cookie": app.globalData.token
+        "cookie": 'JSESSIONID=' + $v.token
       },
       formData: {
-          "price": parseFloat(that.data.introduce),
-          'name': that.data.title,
+        crowdId:$v.groupId,
+        shopName: this.data.title,
+        addr: this.data.address,
+        telephone: this.data.phone 
+          //"price": parseFloat(that.data.introduce),
+          //'name': that.data.title,
       },
       success: function (res) {
-        wx.navigateBack({ changed: true })
-        var data = res.data
-        console.log(res);
-        //do something
+        var data = JSON.parse(res.data);
+        console.log(data);
+        if(data.code == 0) {
+          wx.showToast({
+            title: '添加成功',
+            mask: true,
+            duration: 1500
+          })
+        }else {
+          wx.showModal({
+            title: '提示:',
+            content:data.msg,
+            showCancel: false
+          })
+        }
+        // console.log(res);
+       // wx.navigateBack({ changed: true })
+       // var data = res.data
+        
       },
       fail: function (res) {
         console.log(res);
       }
     })
-  }
+  },
+  onShow: function () {
+    this.setData({
+      index: "1",
+    })
+  },
 })

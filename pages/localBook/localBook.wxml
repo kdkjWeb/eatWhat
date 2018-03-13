@@ -1,9 +1,9 @@
 <!--pages/localBook/localBook.wxml-->
+<header indexY="{{index}}"></header>
 <view class="bookBox">
-<header></header>
-  <view class="groupName">群名：好吃的小伙伴</view>
+  <view class="groupName">群名：{{crowdName}}</view>
   <view class="groupDetail">
-    <view class="balance">群余额：1000</view>
+    <view class="balance">群余额：{{crowdMoney}}</view>
     <view class="unit">单位：元</view>
     <view class="account">
       <button bindtap='selectShowF'>账户操作</button>
@@ -27,10 +27,10 @@
         <view class="tr">
           <view class="td"><view class="img"><image src="{{item.url}}"></image></view></view>
           <view class="td">{{item.name}}</view>
-          <view class="td">{{item.data}}</view>
-          <view class="td">{{item.charge}}</view>
+          <view class="td">{{item.cDate}}</view>
           <view class="td">{{item.pay}}</view>
-          <view class="td">{{item.account}}</view>
+          <view class="td">{{item.pay}}</view>
+          <view class="td">{{item.balance}}</view>
         </view>
       </block>
     </scroll-view> 

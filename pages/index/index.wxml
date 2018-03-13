@@ -4,7 +4,7 @@
     <view class="searchBox">
       <icon class="iconfont icon-sousuo"></icon>
       <input placeholder='搜索群名称/群主名称/群ID' 
-      bindfocus='search'></input>
+      bindtap='search'></input>
     </view>
   </view>
 <view class="title">群列表
@@ -12,15 +12,19 @@
   bindtap='layerShow'></icon>
 </view>
 <scroll-view scroll-y class="list">
-  <block wx:for="[1,2,3,4]" wx:key="index">
-      <view class="group" bindtap='toGroup'>
-        <view class="groupImg">
-          <image src='../../static/indexB.png'></image>
+  <block wx:for="{{groupLists}}" wx:key="{{index}}">
+      <view class="group" 
+      data-groupid="{{item.id}}" 
+      data-crowdmoney="{{item.crowdMoney}}" 
+      data-crowdname="{{item.crowdName}}"
+      bindtap='toGroup'>
+         <view class="groupImg">
+          <image src='{{item.url}}'></image>
         </view>
         <view class="groupName">
-          <view>群名称</view>
-          <view>群主：发抖的小猫咪 <text>9:00</text> </view>
-        </view>
+          <view>{{item.crowdName}}</view>
+          <view>群主：{{item.nickname}} <text>{{item.cDate}}</text> </view>
+        </view> 
       </view>
   </block>
 </scroll-view>
@@ -34,4 +38,4 @@
 inputList="{{inputList}}" 
 title="建群"
 modalShow="{{modalShow}}" 
-catch:myeventBox="myeventBox"></layer>
+catch:myeventBox="createGroup"></layer>

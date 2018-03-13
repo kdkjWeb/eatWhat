@@ -5,21 +5,23 @@
     <view class="searchBox">
       <icon class="iconfont icon-sousuo"></icon>
       <input placeholder='搜索群名称/群主名称/群ID' 
-      bindfocus='search'></input>
+      bindinput='searchT'></input>
+      <view class="searchBtn" bindtap="search">搜索</view>
     </view>
   </view>
 <scroll-view scroll-y class="list">
-  <block wx:for="[1,2,3,4]" wx:key="index">
+  <block wx:for="{{groupLists}}" wx:key="{{index}}">
       <view class="group">
         <view class="groupImg">
-          <image src='../../static/indexB.png'></image>
+          <image src='{{item.url}}'></image>
         </view>
         <view class="groupName">
-          <view>群名称</view>
-          <view>群主：发抖的小猫咪 <text bindtap='addGroup' data-id="{{index}}">+</text> </view>
+          <view>{{item.crowdName}}</view>
+          <view>群主：{{item.nickname}} <text bindtap='addGroup' data-id="{{item.id}}" data-name="{{item.crowdName}}">+</text> </view>
         </view>
       </view>
   </block>
+  <view class="noneDate" wx:if="{{noneData}}">没有搜索到群~</view>
 </scroll-view>
 </view>
 <view class="footer">

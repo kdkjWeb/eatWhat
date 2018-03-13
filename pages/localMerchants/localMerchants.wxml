@@ -1,15 +1,15 @@
 <!--pages/localMerchants/localMerchants.wxml-->
 <view class="indexBox">
-<header></header>
+<header indexY="{{index}}"></header>
 <scroll-view scroll-y class="list">
-  <block wx:for="[1,2,3,4]" wx:key="index">
-      <view class="group" bindtap='todetail'>
+  <block wx:for="{{groupLists}}" wx:key="{{index}}">
+      <view class="group" bindtap='todetail' data-groupid = "{{item.storesId}}">
         <view class="groupImg">
-          <image src='../../static/indexB.png'></image>
+          <image src='{{item.image.url}}'></image>
         </view>
         <view class="groupName">
-          <view>火锅冒菜店<text>记录人：张成</text></view>
-          <view><icon class="iconfont icon-caozuo_xuandian_dingwei"></icon>发抖的小猫咪 </view>
+          <view>{{item.shopName}}<text>记录人：{{item.user.nickname}}</text></view>
+          <view><icon class="iconfont icon-caozuo_xuandian_dingwei"></icon>{{item.addr}} </view>
         </view>
       </view>
   </block>

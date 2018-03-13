@@ -1,18 +1,51 @@
 // pages/businessDetails/businessDetails.js
+const app = getApp();
+const $v = app.globalData;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    id:"",
+    detail:{}
   },
-
+  /**
+   * 获取商家详情
+   */
+  bussinessDetail(){
+    wx.request({
+      url: $v.appPath + 'pc_stores/s_bean',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + app.globalData.token
+      },
+      data: {
+        storesId: this.data.id
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          this.setData({
+            detail:res.data.data.list[0]
+          })
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    console.log(options.groupId);
+    this.setData({
+      id: options.groupId
+    });
   },
 
   /**
@@ -25,8 +58,8 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  
+  onShow: function (options) {
+    this.bussinessDetail()
   },
 
   /**

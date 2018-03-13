@@ -1,10 +1,13 @@
 // pages/member/member.js
+const app = getApp();
+const $v = app.globalData;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    index:"",
     memberList:[
       {
         src: '../../img/1.png',
@@ -30,7 +33,32 @@ Page({
       }
     ]
   },
-
+  //获取群成员
+  getGroupUser(){
+    wx.request({
+      url: $v.appPath + 'pc_member/s_all_user',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + $v.token
+      },
+      data: {
+        crowdId:$v.groupId
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          this.setData({
+            memberList:res.data.data
+          })
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -49,7 +77,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      index: "2",
+    })
+    this.getGroupUser();
   },
 
   /**

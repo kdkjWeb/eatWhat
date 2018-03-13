@@ -1,11 +1,11 @@
 <!--pages/businessDetails/businessDetails.wxml-->
    <header></header> 
 <view class="businessBox">
-  <view class="img"><image mode="widthFix" src='../../static/indexB.png'></image></view>
+  <view class="img"><image mode="widthFix" src='{{detail.image.url}}'></image></view>
   <view class="text">
-    <view>黄手艺火锅冒菜店</view>
-    <view>电话：18844551122</view>
-    <view>地址：成都市天府三街吉泰路333号</view>
-    <view>记录人：张成</view>
+    <view>{{detail.shopName}}</view>
+    <view>电话：{{detail.telephone}}</view>
+    <view>地址：{{detail.addr}}</view>
+    <view>记录人：{{detail.user.nickname}}</view>
   </view>
 </view>

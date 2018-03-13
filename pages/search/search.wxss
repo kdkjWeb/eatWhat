@@ -28,8 +28,20 @@
 .searchBox input {
   height:30px;
   border-radius: 30px;
-  padding:0 40px; 
+  padding:0 60px 0 40px; 
   box-sizing: border-box;
+}
+.searchBtn {
+  width:60px;
+  position:absolute;
+  top:0;
+  right:0;
+  height:30px;
+  line-height:30px;
+  border-radius: 30px;
+  background-color: #e9680a;
+  color:white;
+  text-align: center;
 }
 /* 列表 */
 .list {
@@ -71,6 +83,13 @@
   position:absolute;
   bottom:0;
   right:0;
+}
+
+.noneDate {
+  font-size:14px;
+  margin-top:20px;
+  color:#e9680a;
+  text-align: center;
 }
 
 /* 底部 */

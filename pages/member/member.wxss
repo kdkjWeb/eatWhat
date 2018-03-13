@@ -9,7 +9,7 @@
   display: -webkit-flex;
   flex-wrap: wrap;
 }
-.member view{
+.member>view{
   min-width: 20%;
   /* flex: 1; */
   text-align: center;
@@ -19,6 +19,13 @@
   height: 53px;
   width: 53px;
   border-radius: 53px;
+}
+.member>view view {
+  width:55px;
+  font-size:12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 

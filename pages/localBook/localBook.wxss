@@ -1,7 +1,7 @@
 /* pages/localBook/localBook.wxss */
 .bookBox {
   padding:0 15px;
-  height:100%;
+  height:calc(100% - 53px);
   background-color: #fff;
 }
 .groupName {
@@ -106,10 +106,16 @@
   flex:3;
 }
 .th:nth-of-type(2),.td:nth-of-type(2) {
-  flex:2;
+  flex:3;
+  width:70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .th:nth-of-type(3),.td:nth-of-type(3) {
   flex:2;
+}
+.td:nth-of-type(3){
   font-size:9px;
 }
 .th:nth-of-type(4),.td:nth-of-type(4) {

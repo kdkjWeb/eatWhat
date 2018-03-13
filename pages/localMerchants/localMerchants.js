@@ -1,9 +1,12 @@
 // pages/localMerchants/localMerchants.js
 //获取应用实例
 const app = getApp();
+const $v = app.globalData;
 
 Page({
   data: {
+    index:'',
+    groupLists:[],
     inputList: [{
       textContent: "",     //text 值
       label: "",              //label 的名字 最多4个字
@@ -12,10 +15,40 @@ Page({
       selectList: [],  //选择框 内部循环列表  当type为select时必须要传当前值
     }]
   },
-  todetail:function(){
+  todetail:function(e){
+    var groupId = e.currentTarget.dataset.groupid
     wx.navigateTo({
-      url: '../businessDetails/businessDetails',
+      url: '../businessDetails/businessDetails?groupId='+groupId,
     })
+  },
+  /**
+   * 获取本群商家
+   */
+  groupMearch(){
+    wx.request({
+      url: $v.appPath + 'pc_stores/s_bean',
+      method: "GET",
+      header: {
+        cookie: 'JSESSIONID=' + app.globalData.token
+      },
+      data: {
+        crowdId: $v.groupId
+      },
+      success: (res) => {
+        if (res.data.code == 0) {
+          this.setData({
+            groupLists: res.data.data.list
+          })
+        } else {
+          wx.showModal({
+            title: '提示:',
+            content: res.data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+    
   },
   onLoad: function () {
 
@@ -24,6 +57,9 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-
+    this.setData({
+      index: "2",
+    })
+    this.groupMearch();
   }
 })
