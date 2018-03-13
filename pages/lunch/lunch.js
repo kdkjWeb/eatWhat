@@ -151,11 +151,6 @@ Page({
     console.log(this.data.startDate, this.data.startTime);
   },
   /**
-   * 生命周期函数--监听页面卸载
-   */
-  onHide:function(){
-  },
-  /**
    * 获取商户列表
    */
   mearchList(){
@@ -195,6 +190,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    $v.pageHide = true;
     this.setData({
       index: "0",
     })
@@ -205,7 +201,6 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
   },
 
   /**

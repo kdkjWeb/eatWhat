@@ -6,7 +6,19 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     
-    
+    wx.getUserInfo({
+            success: res => {
+              // 可以将 res 发送给后台解码出 unionId
+              this.globalData.userInfo = res.userInfo
+              console.log(res.userInfo);
+              console.log(this.globalData.userInfo);
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+            }
+          })
     // 发送 res.code 到后台换取 openId, sessionKey, unionId
     // 获取用户信息
     // wx.getSetting({
@@ -79,6 +91,7 @@ App({
           
             }
             if (res.data.msg == "10000") {
+              console.log("100000");
               that.register(); 
               return;
             }
@@ -173,10 +186,12 @@ App({
     crowdName:"",
     crowdMoney:"",
     // appPath: "http://192.168.20.136:8082/",
-    appPath: "http://192.168.20.108:8082/",
-    socketPath:"ws://192.168.20.108:8082/",
+    // appPath: "http://192.168.20.108:8082/",
+    // socketPath:"ws://192.168.20.108:8082/",
     // appPath: "http://192.168.20.8:8080/",
+    appPath: "http://192.168.20.8:8082/",
+    socketPath: "ws://192.168.20.8:8082/",
     token: '',
-    pageSize:0
+    pageHide:true
   }
 })

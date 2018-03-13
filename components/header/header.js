@@ -24,7 +24,7 @@ Component({
     //点击期望早餐
     breakfast(e){
       console.log('期望早餐');
-      wx:wx.navigateTo({
+      wx.redirectTo({
         url: '../lunch/lunch',
       })
 
@@ -32,7 +32,7 @@ Component({
     //点击新建商家
     business(){
       console.log('新建商家')
-      wx: wx.navigateTo({
+      wx.redirectTo({
         url: '../newVeg/newVeg',
       })
     },
@@ -50,19 +50,19 @@ Component({
       switch(index){
         case 0:
         console.log('成员列表');
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../member/member',
         })
         break;
         case 1:
         console.log('本群商家');
-        wx.navigateTo({
+        wx.redirectTo ({
           url: '../localMerchants/localMerchants',
         })
         break;
         case 2:
         console.log('帐薄详情');
-        wx.navigateTo({
+        wx.redirectTo ({
           url: '../localBook/localBook',
         })
         break;
@@ -142,7 +142,7 @@ Component({
                 modalShow: !this.data.modalShow
               })
             }, 1000)
-            wx.navigateTo({
+            wx.redirectTo ({
               url: '../index/index',
             })
           } else {

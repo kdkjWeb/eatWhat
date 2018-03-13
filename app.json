@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/search/search",
-    "pages/lunch/lunch",
     "pages/group/group",
+    "pages/lunch/lunch",
     "pages/newVeg/newVeg",
     "pages/member/member",
     "pages/localMerchants/localMerchants",

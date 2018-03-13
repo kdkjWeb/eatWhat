@@ -177,6 +177,8 @@ Page({
         if (res.data.code == 0) {
           if(res.data.data != null) {
               var d = res.data.data;
+                d.votetime = app.times(d.votetime, "fulldate");
+                d.goOff = app.times(d.goOff, "fulldate");
               var m = d.lMembers;
               var editPr = [];
               m.forEach((e,index)=>{
